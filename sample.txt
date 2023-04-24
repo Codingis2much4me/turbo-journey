@@ -1,1 +1,2 @@
 It's just a sample file.
+This file has been edited
