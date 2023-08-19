@@ -22,7 +22,7 @@ int main()
     char suf[150];
     fgets(suf, 150, stdin);
     printf("%s%s", suf, template_array);
-    printf("%d", is_suffix(template_array, suf));
+    printf("%d\n", is_suffix(template_array, suf));
     
     printf("Calling is_substring on input:\n");
     fgets(template_array, 150, stdin);
@@ -30,6 +30,14 @@ int main()
     char substr[150];
     fgets(substr, 150, stdin);
     printf("%d", is_substring(template_array, substr));
+    
+    printf("Calling get_suffix on input:\n");
+    fgets(template_array, 150, stdin);
+    printf("Enter the length to be extracted:\n");
+    int len;
+    scanf("%d\n", &len);
+    char suf2[len];
+    printf("%d", get_suffix(template_array, suf2, len));
     
     
     
@@ -110,9 +118,8 @@ bool get_suffix(char str[], char suf[], int len)
     for(int i = 0; i < len; i++)
     {
         suf[i] = str[i];
-        printf("%c\t", suf[i]);
     }
-    printf("\n");
+    printf("%s\n", suf);
     if(size_array(suf) == len)
         return true;
     else 
