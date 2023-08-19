@@ -88,7 +88,7 @@ bool is_substring(char str[], char substr[])
         if (str[i] == substr[0])
         {
             int count = 0;
-            for(int j = i; j < size_array(substr); j++)
+            for(int j = i; j < size_array(str); j++)
             {
                 if(str[j] == substr[count++])
                 {
