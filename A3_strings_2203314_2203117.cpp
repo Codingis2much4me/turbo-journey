@@ -5,8 +5,11 @@ bool str_copy(char source[], char dest[]);
 bool is_suffix(char str[], char suf[]);
 bool is_substring(char str[], char substr[]);
 bool get_suffix(char str[], char suf[], int len);
-bool get_substring(char str[], char substr[], int start, int len);
+bool get_substring(char str[], int start, int len);
 int size_array(char a[]);
+bool is_same(char first[], char second[]);
+void concatenate(char source1[], char source2[]);
+void convert_to_upper(char str[]);
 
 int main()
 {
@@ -35,10 +38,32 @@ int main()
     fgets(template_array, 150, stdin);
     printf("Enter the length to be extracted:\n");
     int len;
-    scanf("%d\n", &len);
+    scanf(" %d", &len);
     char suf2[len];
-    printf("%d", get_suffix(template_array, suf2, len));
+    printf("\n%d", get_suffix(template_array, suf2, len));
     
+    printf("Calling get_substring on input/source:\n");
+    getchar();
+    fgets(template_array, 150, stdin);
+    printf("Enter the starting position of the substring:\n");
+    int start_letter;
+    scanf("%d", &start_letter);
+    printf("Enter the length to be extracted:\n");
+    scanf("%d", &len);
+    printf("\n%d", get_substring(template_array, start_letter, len));
+    
+    printf("Calling is_same on input 1:\n");
+    char inp1[150];
+    getchar();
+    fgets(inp1, 150, stdin);
+    printf("input 2:\n");
+    char inp2[150];
+    fgets(inp2, 150, stdin);
+    printf("%d\n", is_same(inp1, inp2));
+    
+    printf("Calling convert_to_upper on input:\n");
+    fgets(inp1, 150, stdin);
+    convert_to_upper(inp1);
     
     
 }
@@ -115,27 +140,36 @@ bool is_substring(char str[], char substr[])
 
 bool get_suffix(char str[], char suf[], int len)
 {
-    for(int i = 0; i < len; i++)
+    int i;
+    
+    for(i = 0; i < len; i++)
     {
-        suf[i] = str[i];
+        suf[i] = str[size_array(str) - len - 1 + i];
     }
+    suf[i] = '\0';
     printf("%s\n", suf);
+    
     if(size_array(suf) == len)
         return true;
     else 
         return false;
 }
 
-bool get_substring(char str[], char substr[], int start, int len)
+bool get_substring(char str[], int start, int len)
 {
+    char substr[len];
     int counter = 0;
     
     for(int i = start - 1; i < start - 1 + len; i++)
     {
         substr[counter++] = str[i];
     }
-    if(size_array(substr) == len)
+    substr[counter] = '\0';
+    if(counter == len)
+    {
+        printf("%s", substr);
         return true;
+    }
     return false;
 }
 
@@ -149,9 +183,11 @@ bool is_same(char first[], char second[])
     return true;
 }
 
-void concatenate(char source1[], char source2[], char dest[])
+void concatenate(char source1[], char source2[])
 {
+    char dest[size_array(source1) + size_array(source2)];
     int i;
+    printf("%c", source1[0]);
     for( i = 0; i < size_array(source1); i++)
     {
         dest[i] = source1[i];
@@ -161,5 +197,15 @@ void concatenate(char source1[], char source2[], char dest[])
         dest[i+j] = source2[j];
     }
     printf("%s", dest);
+}
+
+void convert_to_upper(char str[])
+{
+    printf("%s", str);
+    for(int i = 0; i < size_array(str); i++)
+    {
+        str[i] = str[i] + 32;
+    }
+    printf("%s", str);
 }
 
