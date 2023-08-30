@@ -65,6 +65,12 @@ int main()
     fgets(inp1, 150, stdin);
     convert_to_upper(inp1);
     
+    printf("Calling concatenate on input 1:\n");
+    fgets(inp1, 150, stdin);
+    printf("Input 2:\n");
+    fgets(inp2, 150, stdin);
+    concatenate(inp1, inp2);
+    
     
 }
 
@@ -185,26 +191,33 @@ bool is_same(char first[], char second[])
 
 void concatenate(char source1[], char source2[])
 {
-    char dest[size_array(source1) + size_array(source2)];
-    int i;
-    printf("%c", source1[0]);
+    char dest[size_array(source1) + size_array(source2) - 2];
+    int i, j;
+    
     for( i = 0; i < size_array(source1); i++)
     {
+        if(source1[i] != '\0' && source1[i] != '\n')
         dest[i] = source1[i];
     }
-    for(int j = 0; j < size_array(source2); j++)
+    for(j = 0; j < size_array(source2); j++)
     {
+        if(source2[j] != '\0')
         dest[i+j] = source2[j];
     }
+    dest[i+j] = '\0';
     printf("%s", dest);
 }
 
 void convert_to_upper(char str[])
 {
-    printf("%s", str);
+    char uppercase;
     for(int i = 0; i < size_array(str); i++)
     {
-        str[i] = str[i] + 32;
+        if(str[i] >= 97 && str[i] <= 123)
+        {
+            uppercase = str[i] - 32;
+            str[i] = uppercase;
+        }
     }
     printf("%s", str);
 }
