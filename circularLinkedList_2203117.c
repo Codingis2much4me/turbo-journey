@@ -1,4 +1,4 @@
-/*Implement a circular linked list with the following functions
+/*This program Implements a circular linked list with the following functions
 void createList(struct node** head_ptr): Creates a circular linked list with the length and
 elements taken from the user.
 void Print(struct node* head): Prints the elements of the circular linked list.*/
@@ -52,6 +52,6 @@ int main() {
     return 0;
 }
 
-// Path: circularLinkedList_2203117.c
+
 
 
