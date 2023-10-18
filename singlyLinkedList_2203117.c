@@ -1,4 +1,4 @@
-/* Implement a singly linked list with the following functions
+/* This program Implements a singly linked list with the following functions
     1. bool InsertAtPosition(struct node** head_ptr, int index, int elem) which creates a node 
     with data = elem and places this new node at the index th position in the linked list. Returns 
     True if the operation is successful (i.e. index is in the correct range) and False otherwise.
@@ -8,14 +8,13 @@
     3. void createList(struct node** head_ptr) which creates a linked list whose length and elements
     are taken from the user. It should use the InsertAtPosition function to create the linked list. 
     It should also print the linked list.
-    4. void Reverse(struct node** head_ptr) which reverses the linked list. Note that you don't need
-    to create new nodes, just change the 'next' pointer to point to the previous node. */
+    4. void Reverse(struct node** head_ptr) which reverses the linked list. */
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
 
-struct node {
+struct node {                   //defining the structure for a node in the linked list.
     int elem;
     struct node *next;
 };
@@ -93,10 +92,10 @@ void Reverse(struct node** head_ptr) {
     }
     *head_ptr = prev;
 }
-//Write an appropriate main function to test the above functions including InsertAtPosition, DeleteAtPosition, createList and Reverse.
+//Writing the appropriate main function to test the above functions including InsertAtPosition, DeleteAtPosition, createList and Reverse.
 int main() {
     struct node *head = NULL;
-    createList(&head);
+    createList(&head);  
     Reverse(&head);
     struct node *temp = head;
     while(temp != NULL) {
