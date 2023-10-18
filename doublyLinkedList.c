@@ -1,7 +1,7 @@
-/* Implement a doubly linked list with the following functions:
+/* This function Implements a doubly linked list with the following functions:
 void createList(struct node** head_ptr) Creates a doubly linked list with the length and elements
-taken from the user. Also print the linked list.
-void InsertionSort(struct node** head_ptr) Implement insertion sort on the doubly linked list so 
+taken from the user. Also prints the linked list.
+void InsertionSort(struct node** head_ptr) we also Implement insertion sort on the doubly linked list so 
 that the elements are in ascending order.*/
 
 #include<stdio.h>
