@@ -1,4 +1,4 @@
-/*Author : Maanas Bhaya, 2203117
+/*Author 
 To calculate the brightest area in a 2D array.
 In this program, for the sake of simplicity, we have assumed the array in the main() function. We can also take inputs from 
 the user for each element and then compute the result.*/
