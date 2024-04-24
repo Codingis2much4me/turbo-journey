@@ -257,12 +257,96 @@ struct minHeapNode* createHuffmanTree(map<char, int>& freq) {
     return extractMin(heap);
 }
 
+void createMap(map<char, vector<char>>&final, vector<vector<char>>const &code, vector<char>const &codechar) {
+    //vector<char> temp;
+    for(int i = 0; i < codechar.size(); i++) {
+        final[codechar[i]] = code[i];
+    }
+    
+    cout<<"printing the map: "<<endl;
+    for(auto j:final) {
+        cout.put(j.first)<<" ";
+        for(int k = 0; k < j.second.size(); k++) {
+            cout.put(j.second[k]);
+        }
+        cout<<endl;
+    }
+}
+
+void encode(ifstream &inputFile, fstream &outputFile, const map<char, vector<char>> &final) {
+    string line;
+    
+    while (getline(inputFile, line)) {
+        for (char j : line) {
+            if (j == ' ') {
+                // Encode spaces if necessary
+                outputFile.put(' ');
+                continue;
+            }
+                
+            auto it = final.find(j);
+            if (it != final.end()) {
+                for (char code : it->second) {
+                    outputFile.put(code);
+                }
+            } else {
+                // Handle characters not found in the final map
+                cerr << "Character '" << j << "' not found in encoding map." << endl;
+                // You might want to handle this error differently
+            }
+        }
+        
+    }
+}
+
+void createReverseMap(map<char, vector<char>>const& final, map<vector<char>, char> &finalreverse) {
+    for(auto j: final) {
+        finalreverse[j.second] = j.first;
+    }
+    
+    cout<<"Created Reverse Map: "<<endl;
+    for(auto j: finalreverse) {
+        for(int k = 0; k < j.first.size(); k++) {
+            cout<<j.first[k];
+        }
+        cout<<" : ";
+        cout.put(j.second)<<endl;
+    }
+}
+
+void decode(fstream &encoded, ofstream &decoded, map<vector<char>, char>const& finalreverse) {
+    vector<char>temp;
+    string line;
+    while(getline(encoded, line)) {
+        for(char ch: line) {
+            if(ch == ' ') {
+                decoded.put(' ');
+                temp.clear();
+                continue;
+            }
+            temp.push_back(ch);
+            auto it = finalreverse.find(temp);
+            if(it != finalreverse.end()) {
+                decoded.put(it->second);
+                temp.clear();
+            }
+            else continue;
+        }
+    }
+}
+
+
 int main() {
     ifstream inputFile("sentence.txt");
-    
+    fstream outputFile("encoded.txt");
+    ofstream decodedFile("decoded.txt");
     if(!(inputFile)) {
         cerr<<"Error while opening file. "<<endl;
         return 1;
+    }
+    
+    if(!(outputFile)) {
+        cerr<<"Error while writing to file."<<endl;
     }
     
     int n = 5;
@@ -291,11 +375,25 @@ int main() {
     map<char, int>mp;
     createFrequencyTable(inputFile, mp);
     
+    inputFile.close();
     
     struct minHeapNode* newroot = createHuffmanTree(mp);
     printFinalTree(newroot);
     createHuffmanCodeTable(newroot, buf, codechar, code);
     cout<<endl;
+    
+    inputFile.open("sentence.txt");
+    if(!(inputFile)) {
+        cerr<<"Error when reopening the file"<<endl;
+        return 1;
+    }
+    else {
+        cout<<"File reopened successfully"<<endl;
+    }
+    
+    map<char, vector<char>>final;
+    createMap(final, code, codechar);
+    encode(inputFile, outputFile, final);
     
     cout<<"printing the huffman code table..."<<endl;
     for(int i = 0; i < codechar.size(); i++) {
@@ -305,4 +403,23 @@ int main() {
         }
         cout<<endl;
     }
+    
+    inputFile.close();
+    outputFile.close();
+    
+    map<vector<char>, char> finalreverse;
+    createReverseMap(final, finalreverse);
+    outputFile.open("encoded.txt");
+    if(!(outputFile)) {
+        cerr<<"Unable to reopen file. "<<endl;
+        return 1;
+    }
+    else {
+        cout<<"File reopened successfully"<<endl;
+    }
+    
+    decode(outputFile, decodedFile, finalreverse);
+    
+    outputFile.close();
+    decodedFile.close();
 }
